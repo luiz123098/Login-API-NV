@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table( name = "usuarios",
         uniqueConstraints ={
+                            @UniqueConstraint(columnNames = "id"),
                             @UniqueConstraint(columnNames = "login"),
                             @UniqueConstraint(columnNames = "cpf")
                             })
