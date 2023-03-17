@@ -1,6 +1,5 @@
 package com.exemple.Entity;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 //ANNOTATIONS FOR USERS TABLE CREATION
@@ -15,21 +14,23 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @Column(name = "login")
+    @Column(name = "login",nullable = false)
     private String login;
-    @NotNull
-    @Column(name = "senha")
+    @Column(name = "senha",nullable = false)
     private String password;
-    @NotNull
-    @Column(name = "nome")
+    @Column(name = "nome",nullable = false)
     private String name;
-    @NotNull
-    @Column(name = "cpf")
+    @Column(name = "cpf",nullable = false)
     private String cpf;
 
     public User() {
+    }
 
+    public User(String login, String password, String name, String cpf) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.cpf = cpf;
     }
 
     public long getId() {

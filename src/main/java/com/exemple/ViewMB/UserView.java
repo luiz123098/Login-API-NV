@@ -22,6 +22,7 @@ public class UserView {
     public ResponseEntity save(@RequestBody UserDTO dto) {
 
         User user = new User();
+        user.setId(dto.getId());
         user.setLogin(dto.getLogin());
         user.setPassword(dto.getPassword());
         user.setName(dto.getName());
