@@ -1,26 +1,23 @@
 package com.exemple.ViewMB;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.exemple.ControllerBO.ControllerInterface.UserController;
 import com.exemple.Entity.DTO.UserDTO;
 import com.exemple.Entity.User;
 import com.exemple.Exceptions.BusinessRules;
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path ="/api/users")
+@RequestMapping(path ="/api")
 public class UserView {
+    @Autowired
     private UserController userController;
     public UserView(UserController userController) {
         this.userController = userController;
     }
-    @PostMapping(path = "/post")
+    @PostMapping(path = "/register")
     public ResponseEntity save(@RequestBody UserDTO userDTO) {
 
         User user = new User();
@@ -33,6 +30,16 @@ public class UserView {
             return new ResponseEntity(userSave, HttpStatus.CREATED);
         } catch (BusinessRules e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping(path = "/users/{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable Long id) {
+        User user = userController.findUserById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }

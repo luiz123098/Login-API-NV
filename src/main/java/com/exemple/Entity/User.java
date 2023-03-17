@@ -1,6 +1,7 @@
 package com.exemple.Entity;
 
 
+import com.exemple.ModelInterface.UserModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 
