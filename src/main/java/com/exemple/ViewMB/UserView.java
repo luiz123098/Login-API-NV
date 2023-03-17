@@ -1,9 +1,11 @@
 package com.exemple.ViewMB;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.exemple.ControllerBO.ControllerInterface.UserController;
 import com.exemple.Entity.DTO.UserDTO;
 import com.exemple.Entity.User;
 import com.exemple.Exceptions.BusinessRules;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,15 +20,11 @@ public class UserView {
     public UserView(UserController userController) {
         this.userController = userController;
     }
-    @PostMapping
+    @PostMapping(path = "/post")
     public ResponseEntity save(@RequestBody UserDTO dto) {
 
         User user = new User();
-        user.setId(dto.getId());
-        user.setLogin(dto.getLogin());
-        user.setPassword(dto.getPassword());
-        user.setName(dto.getName());
-        user.setCpf(dto.getCpf());
+        BeanUtils.copyProperties(dto, user);
         try {
             User userSave = userController.save(user);
             return new ResponseEntity(userSave, HttpStatus.CREATED);

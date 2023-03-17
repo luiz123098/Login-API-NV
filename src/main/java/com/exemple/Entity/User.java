@@ -1,6 +1,9 @@
 package com.exemple.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.persistence.*;
 //ANNOTATIONS FOR USERS TABLE CREATION
 @Entity
@@ -24,17 +27,7 @@ public class User {
     @Column(name = "cpf",nullable = false)
     private String cpf;
 
-    public User() {
-    }
-
-    public User(String login, String password, String name, String cpf) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.cpf = cpf;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
