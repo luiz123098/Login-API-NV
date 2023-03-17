@@ -1,9 +1,9 @@
-package ControllerBO;
+package com.exemple.ControllerBO;
 
-import ControllerBO.ControllerInterface.UserController;
-import Entity.User;
-import Exceptions.BusinessRules;
-import ModelDAO.ModelInterface.UserModel;
+import com.exemple.ControllerBO.ControllerInterface.UserController;
+import com.exemple.Entity.User;
+import com.exemple.Exceptions.BusinessRules;
+import com.exemple.ModelInterface.UserModel;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

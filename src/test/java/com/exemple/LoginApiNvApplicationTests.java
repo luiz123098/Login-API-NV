@@ -1,4 +1,4 @@
-package com.example.LoginAPINV;
+package com.exemple;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,13 +1,38 @@
-package Entity.DTO;
+package com.exemple.Entity;
 
-public class UserDTO {
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+//ANNOTATIONS FOR USERS TABLE CREATION
+@Entity
+@Table( name = "usuarios",
+        uniqueConstraints ={
+                            @UniqueConstraint(columnNames = "login"),
+                            @UniqueConstraint(columnNames = "cpf")
+                            })
+public class User {
+//CAN BE CHANGED AS NEEDS
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Column(name = "login")
     private String login;
+    @NotNull
+    @Column(name = "senha")
     private String password;
+    @NotNull
+    @Column(name = "nome")
     private String name;
+    @NotNull
+    @Column(name = "cpf")
     private String cpf;
 
-    public Long getId() {
+    public User() {
+
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -46,5 +71,4 @@ public class UserDTO {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
 }

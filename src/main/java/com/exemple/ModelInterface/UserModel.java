@@ -1,6 +1,6 @@
-package ModelDAO.ModelInterface;
+package com.exemple.ModelInterface;
 
-import Entity.User;
+import com.exemple.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserModel extends JpaRepository<User,Long> {

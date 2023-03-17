@@ -1,6 +1,6 @@
-package ControllerBO.ControllerInterface;
+package com.exemple.ControllerBO.ControllerInterface;
 
-import Entity.User;
+import com.exemple.Entity.User;
 
 import javax.transaction.Transactional;
 

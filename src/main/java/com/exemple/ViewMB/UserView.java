@@ -1,9 +1,9 @@
-package ViewMB;
+package com.exemple.ViewMB;
 
-import ControllerBO.ControllerInterface.UserController;
-import Entity.DTO.UserDTO;
-import Entity.User;
-import Exceptions.BusinessRules;
+import com.exemple.ControllerBO.ControllerInterface.UserController;
+import com.exemple.Entity.DTO.UserDTO;
+import com.exemple.Entity.User;
+import com.exemple.Exceptions.BusinessRules;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
