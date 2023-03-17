@@ -21,10 +21,13 @@ public class UserView {
         this.userController = userController;
     }
     @PostMapping(path = "/post")
-    public ResponseEntity save(@RequestBody UserDTO dto) {
+    public ResponseEntity save(@RequestBody UserDTO userDTO) {
 
         User user = new User();
-        BeanUtils.copyProperties(dto, user);
+        user.setLogin(userDTO.getLogin());
+        user.setPassword(userDTO.getPassword());
+        user.setName(userDTO.getName());
+        user.setCpf(userDTO.getCpf());
         try {
             User userSave = userController.save(user);
             return new ResponseEntity(userSave, HttpStatus.CREATED);
