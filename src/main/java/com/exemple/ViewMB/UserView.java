@@ -1,16 +1,16 @@
 package com.exemple.ViewMB;
 
+import com.exemple.Exceptions.BusinessRules;
 import com.exemple.ControllerBO.ControllerInterface.UserController;
 import com.exemple.Entity.DTO.UserDTO;
 import com.exemple.Entity.User;
-import com.exemple.Exceptions.BusinessRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path ="/api")
+@RequestMapping("/user")
 public class UserView {
     @Autowired
     private UserController userController;
@@ -33,7 +33,7 @@ public class UserView {
         }
     }
 
-    @GetMapping(path = "/users/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
         User user = userController.findUserById(id);
         if (user != null) {

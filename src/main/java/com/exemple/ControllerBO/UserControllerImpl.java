@@ -1,10 +1,11 @@
 package com.exemple.ControllerBO;
 
+import com.exemple.ModelInterface.UserModel;
+import com.exemple.Utils.UtilsInterface.Util;
 import com.exemple.ControllerBO.ControllerInterface.UserController;
 import com.exemple.Entity.DTO.UserDTO;
 import com.exemple.Entity.User;
 import com.exemple.Exceptions.BusinessRules;
-import com.exemple.ModelInterface.UserModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,20 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserControllerImpl implements UserController{
+public class UserControllerImpl implements UserController {
+    @Autowired
+    private Util util;
     @Autowired
     private UserModel userModel;
 
     @Override
     public User save(User user) {
-        validateLogin(user.getLogin());
-        return userModel.save(user);
+        if(util.validateLogin(user.getLogin())) {
+            validateLogin(user.getLogin());
+            return userModel.save(user);
+        } else {
+            throw new BusinessRules("O email inserido não tem um formato correto");
+        }
     }
     @Override
     public void validateLogin(String login) {

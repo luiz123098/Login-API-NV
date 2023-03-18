@@ -1,10 +1,6 @@
 package com.exemple.Entity;
 
 
-import com.exemple.ModelInterface.UserModel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-
 import javax.persistence.*;
 //ANNOTATIONS FOR USERS TABLE CREATION
 @Entity
