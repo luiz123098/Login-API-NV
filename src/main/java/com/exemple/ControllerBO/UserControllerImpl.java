@@ -30,8 +30,8 @@ public class UserControllerImpl implements UserController {
     }
     @Override
     public void validateLogin(String login) {
-        boolean existe = userModel.existsByLogin(login);
-        if(existe){
+        boolean exist = userModel.existsByLogin(login);
+        if(exist){
             throw new BusinessRules("Já existe um usuário cadastrado com esse login");
         }
     }
