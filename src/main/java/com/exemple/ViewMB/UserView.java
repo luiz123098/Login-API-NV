@@ -33,7 +33,7 @@ public class UserView {
         }
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/consult/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
         User user = userController.findUserById(id);
         if (user != null) {

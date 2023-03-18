@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,7 +48,7 @@ public class UserControllerImpl implements UserController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             UserDTO userDTO = new UserDTO();
-            BeanUtils.copyProperties(userDTO, user);
+            userDTO = userDTO;
             return user;
         } else {
             return null;
