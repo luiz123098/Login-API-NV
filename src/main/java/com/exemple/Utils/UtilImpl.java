@@ -1,12 +1,12 @@
 package com.exemple.Utils;
 
+import com.exemple.Exceptions.UtilException;
 import com.exemple.Utils.UtilsInterface.Util;
 import org.springframework.stereotype.Component;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Component
-public class UtilImpl implements Util {
+public class UtilImpl implements Util{
     @Override
     public boolean validateLogin(String login){
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
@@ -53,9 +53,11 @@ public class UtilImpl implements Util {
         return true;
     }
     @Override
-    public boolean validateCpf(String cpf) {
+    public boolean validateCpf(String cpf) throws UtilException {
         //Metodo criado por ChatGpt, coloquei as anotações
-        if (cpf == null || cpf.trim().isEmpty()) {
+        try {
+
+            if (cpf == null || cpf.trim().isEmpty()) {
             return false;
         }
 
@@ -104,9 +106,12 @@ public class UtilImpl implements Util {
         for (int i = 0; i < 11; i++) {
             if (digits[i] != Character.getNumericValue(cpf.charAt(i))) {
                 return false;
+                }
             }
-        }
+        } catch (Exception e) {
+                throw new UtilException("Erro ao acessar a validação do CPF");
 
+        }
         return true;
     }
 
