@@ -1,5 +1,6 @@
 package com.exemple.Utils;
 
+import com.exemple.Utils.UtilsInterface.PasswordValidationError;
 import com.exemple.Utils.UtilsInterface.Util;
 import org.springframework.stereotype.Component;
 import java.util.regex.Matcher;
@@ -19,33 +20,33 @@ public class UtilImpl implements Util{
     }
     @Override
     public boolean validatePassword(String password) {
-        //Esse metódo foi criado pelo ChatGpt, por isso as anotações
         if (password == null || password.isEmpty()) {
+            PasswordValidationError.EMPTY_MESSAGE.getMessage();
             return false;
         }
 
-        // Verifica se a senha tem pelo menos 8 caracteres
         if (password.length() < 8) {
+            PasswordValidationError.TOO_SHORT.getMessage();
             return false;
         }
 
-        // Verifica se a senha contém pelo menos um dígito
         if (!password.matches(".*\\d.*")) {
+           PasswordValidationError.MISSING_DIGIT.getMessage();
             return false;
         }
 
-        // Verifica se a senha contém pelo menos uma letra maiúscula
         if (!password.matches(".*[A-Z].*")) {
+            PasswordValidationError.MISSING_UPPERCASE.getMessage();
             return false;
         }
 
-        // Verifica se a senha contém pelo menos uma letra minúscula
         if (!password.matches(".*[a-z].*")) {
+            PasswordValidationError.MISSING_LOWERCASE.getMessage();
             return false;
         }
 
-        // Verifica se a senha contém pelo menos um caractere especial
-        if (!password.matches(".*[@#$%^&+=].*")) {
+        if (!password.matches(".*[@#$%^&+=!].*")) {
+            PasswordValidationError.MISSING_SPECIAL.getMessage();
             return false;
         }
 
@@ -55,7 +56,7 @@ public class UtilImpl implements Util{
     public boolean validateCpf(String cpf) {
         //Metodo criado por ChatGpt, coloquei as anotações
         try {
-
+        //Verifica se a senha não é nula
             if (cpf == null || cpf.trim().isEmpty()) {
             return false;
         }
