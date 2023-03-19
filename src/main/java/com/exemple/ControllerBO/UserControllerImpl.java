@@ -23,7 +23,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public User save(User user) {
-        if(util.validateLogin(user.getLogin())) {
+        if(util.validateLogin(user.getLogin()) && util.validatePassword(user.getPassword()) && util.validateCpf(user.getCpf())) {
             validateLogin(user.getLogin());
             return userModel.save(user);
         } else {
