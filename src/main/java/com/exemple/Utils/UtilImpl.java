@@ -54,8 +54,13 @@ public class UtilImpl implements Util {
     }
     @Override
     public boolean validateCpf(String cpf) {
-        // Remove quaisquer caracteres não numéricos do CPF
-        cpf = cpf.replaceAll("[^0-9]", "");
+        //Metodo criado por ChatGpt, coloquei as anotações
+        if (cpf == null || cpf.trim().isEmpty()) {
+            return false;
+        }
+
+        // Remove pontos e traços do CPF
+        cpf = cpf.replaceAll("\\D", "");
 
         // Verifica se o CPF tem 11 dígitos
         if (cpf.length() != 11) {
@@ -104,5 +109,6 @@ public class UtilImpl implements Util {
 
         return true;
     }
+
 
 }
