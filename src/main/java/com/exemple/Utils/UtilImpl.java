@@ -1,6 +1,5 @@
 package com.exemple.Utils;
 
-import com.exemple.Exceptions.UtilException;
 import com.exemple.Utils.UtilsInterface.Util;
 import org.springframework.stereotype.Component;
 import java.util.regex.Matcher;
@@ -53,7 +52,7 @@ public class UtilImpl implements Util{
         return true;
     }
     @Override
-    public boolean validateCpf(String cpf) throws UtilException {
+    public boolean validateCpf(String cpf) {
         //Metodo criado por ChatGpt, coloquei as anotações
         try {
 
@@ -109,8 +108,7 @@ public class UtilImpl implements Util{
                 }
             }
         } catch (Exception e) {
-                throw new UtilException("Erro ao acessar a validação do CPF");
-
+            System.out.println("Error ao tentar validar o cpf");
         }
         return true;
     }
