@@ -6,6 +6,7 @@ import com.exemple.ControllerBO.ControllerInterface.UserController;
 import com.exemple.Entity.DTO.UserDTO;
 import com.exemple.Entity.User;
 import com.exemple.Exceptions.BusinessRules;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class UserControllerImpl implements UserController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             UserDTO userDTO = new UserDTO();
-            userDTO = userDTO;
+            BeanUtils.copyProperties(userDTO, user);
             return user;
         } else {
             return null;
