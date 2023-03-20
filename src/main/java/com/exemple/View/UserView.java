@@ -1,8 +1,9 @@
-package com.exemple.ViewMB;
+package com.exemple.View;
 
+import com.exemple.Enum.RegisterMessages;
 import com.exemple.Exceptions.BusinessRules;
-import com.exemple.ControllerBO.ControllerInterface.UserController;
-import com.exemple.Entity.DTO.UserDTO;
+import com.exemple.controller.ControllerInterface.UserController;
+import com.exemple.dto.UserDTO;
 import com.exemple.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,22 +15,24 @@ import org.springframework.web.bind.annotation.*;
 public class UserView {
     @Autowired
     private UserController userController;
+
     public UserView(UserController userController) {
         this.userController = userController;
     }
+
     @PostMapping(path = "/register")
     public ResponseEntity save(@RequestBody UserDTO userDTO) {
-
-        User user = new User();
-        user.setLogin(userDTO.getLogin());
-        user.setPassword(userDTO.getPassword());
-        user.setName(userDTO.getName());
-        user.setCpf(userDTO.getCpf());
         try {
+            User user = new User();
+            user.setLogin(userDTO.getLogin());
+            user.setPassword(userDTO.getPassword());
+            user.setName(userDTO.getName());
+            user.setCpf(userDTO.getCpf());
+
             User userSave = userController.save(user);
             return new ResponseEntity(userSave, HttpStatus.CREATED);
         } catch (BusinessRules e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return new ResponseEntity(new BusinessRules("Erro ao realizar o cadastro"), HttpStatus.BAD_REQUEST);
         }
     }
 

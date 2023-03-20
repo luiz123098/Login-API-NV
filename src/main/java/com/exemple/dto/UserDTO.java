@@ -1,4 +1,4 @@
-package com.exemple.Entity.DTO;
+package com.exemple.dto;
 
 public class UserDTO {
     private String login;

@@ -1,6 +1,13 @@
-package com.exemple.Utils.UtilsInterface;
+package com.exemple.Enum;
 
-public enum PasswordValidationError {
+public enum RegisterMessages {
+//
+
+    //Login messages
+    LOGIN_SUCCESS("Login registrado com sucesso"),
+    USER_ALREADY_REGISTER("Já existe um usuário cadastrado com esse login"),
+
+    //Password error messages
     EMPTY_MESSAGE("A senha deve ser preenchida"),
     TOO_SHORT("A senha deve ter pelo menos 8 caracteres."),
     MISSING_DIGIT("A senha deve conter pelo menos um dígito."),
@@ -10,7 +17,7 @@ public enum PasswordValidationError {
 
     private String message;
 
-    PasswordValidationError(String message) {
+    RegisterMessages(String message) {
         this.message = message;
     }
 

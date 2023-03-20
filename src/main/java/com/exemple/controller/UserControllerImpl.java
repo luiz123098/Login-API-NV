@@ -1,9 +1,10 @@
-package com.exemple.ControllerBO;
+package com.exemple.controller;
 
-import com.exemple.ModelInterface.UserModel;
+import com.exemple.Utils.UtilImpl;
+import com.exemple.model.UserModel;
 import com.exemple.Utils.UtilsInterface.Util;
-import com.exemple.ControllerBO.ControllerInterface.UserController;
-import com.exemple.Entity.DTO.UserDTO;
+import com.exemple.controller.ControllerInterface.UserController;
+import com.exemple.dto.UserDTO;
 import com.exemple.Entity.User;
 import com.exemple.Exceptions.BusinessRules;
 import org.springframework.beans.BeanUtils;
@@ -16,31 +17,29 @@ import java.util.Optional;
 @Service
 public class UserControllerImpl implements UserController {
     @Autowired
-    private Util util;
+    Util util;
     private PasswordEncoder encoder;
     @Autowired
     private UserModel userModel;
+    public UtilImpl utilImpl = new UtilImpl();
+
     public UserControllerImpl(PasswordEncoder encoder) {
         this.encoder = encoder;
     }
 
     @Override
     public User save(User user) {
-        if(util.validateLogin(user.getLogin()) && util.validatePassword(user.getPassword()) && util.validateCpf(user.getCpf())) {
-            validateLogin(user.getLogin());
+        try {
+            util.validateLogin(user.getLogin());
+            util.validatePassword(user.getPassword());
+            util.validateCpf(user.getCpf());
+
 
             //faz a cryptografia da senha antes de salvar no banco
             user.setPassword(encoder.encode(user.getPassword()));
             return userModel.save(user);
-        } else {
-            throw new BusinessRules("Ocorreu um erro na validação do usuário");
-        }
-    }
-    @Override
-    public void validateLogin(String login) {
-        boolean exist = userModel.existsByLogin(login);
-        if(exist){
-            throw new BusinessRules("Já existe um usuário cadastrado com esse login");
+        } catch (BusinessRules e) {
+            throw new BusinessRules(utilImpl.getMessage());
         }
     }
 
