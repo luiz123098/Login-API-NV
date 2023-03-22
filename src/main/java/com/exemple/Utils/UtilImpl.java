@@ -1,12 +1,15 @@
 package com.exemple.Utils;
 
 import com.exemple.Exceptions.BusinessRules;
-import com.exemple.Enum.RegisterMessages;
+import com.exemple.Exceptions.ExceptionVO;
+import com.exemple.Message.Message;
+import com.exemple.Message.RegisterMessages;
 import com.exemple.Utils.UtilsInterface.Util;
 import com.exemple.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,8 +39,10 @@ public class UtilImpl implements Util {
     public boolean validatePassword(String password) {
 
         if (password == null || password.isEmpty()) {
-            setMessage(new BusinessRules(RegisterMessages.EMPTY_MESSAGE.getMessage()).toString());
+
+            globalMessage(Message.UtilPassword.EMPTY_PASSWORD, ExceptionVO.ERROR_INFO );
             return false;
+
         }
 
         if (password.length() < 8) {
@@ -135,5 +140,9 @@ public class UtilImpl implements Util {
 
     public String getMessage() {
         return message;
+    }
+
+    public void globalMessage(final String severityMessage, String exceptionVO) {
+                globalMessage(severityMessage, exceptionVO);
     }
 }

@@ -1,6 +1,5 @@
 package com.exemple.View;
 
-import com.exemple.Enum.RegisterMessages;
 import com.exemple.Exceptions.BusinessRules;
 import com.exemple.controller.ControllerInterface.UserController;
 import com.exemple.dto.UserDTO;
