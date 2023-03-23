@@ -1,7 +1,7 @@
 package com.exemple.model.services;
 
 import com.exemple.model.utils.Util;
-import com.exemple.model.UserRepository;
+import com.exemple.Repository.UserRepository;
 import com.exemple.model.services.ServicesInterface.UserService;
 import com.exemple.model.dto.UserDTO;
 import com.exemple.model.entity.User;

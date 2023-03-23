@@ -2,7 +2,7 @@ package com.exemple.model.utils;
 
 import com.exemple.model.exceptions.BusinessRules;
 import com.exemple.model.message.Message;
-import com.exemple.model.UserRepository;
+import com.exemple.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
