@@ -1,6 +1,6 @@
 package com.exemple.controller.ControllerInterface;
 
-import com.exemple.Entity.User;
+import com.exemple.entity.User;
 
 public interface UserController {
 

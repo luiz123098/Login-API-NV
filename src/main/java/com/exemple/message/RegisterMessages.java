@@ -1,4 +1,4 @@
-package com.exemple.Message;
+package com.exemple.message;
 
 public enum RegisterMessages {
 //

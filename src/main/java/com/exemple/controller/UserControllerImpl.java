@@ -1,16 +1,16 @@
 package com.exemple.controller;
 
-import com.exemple.Utils.UtilImpl;
+import com.exemple.utils.UtilImpl;
 import com.exemple.model.UserModel;
-import com.exemple.Utils.UtilsInterface.Util;
 import com.exemple.controller.ControllerInterface.UserController;
 import com.exemple.dto.UserDTO;
-import com.exemple.Entity.User;
-import com.exemple.Exceptions.BusinessRules;
+import com.exemple.entity.User;
+import com.exemple.exceptions.BusinessRules;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.exemple.utils.utilsInterface.Util;
 
 import java.util.Optional;
 

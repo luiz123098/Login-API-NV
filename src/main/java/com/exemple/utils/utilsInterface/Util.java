@@ -1,4 +1,4 @@
-package com.exemple.Utils.UtilsInterface;
+package com.exemple.utils.utilsInterface;
 
 
 public interface Util {

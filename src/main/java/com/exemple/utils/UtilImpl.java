@@ -1,8 +1,10 @@
-package com.exemple.Utils;
+package com.exemple.utils;
 
-import com.exemple.Exceptions.BusinessRules;
-import com.exemple.Enum.RegisterMessages;
-import com.exemple.Utils.UtilsInterface.Util;
+import com.exemple.exceptions.BusinessRules;
+import com.exemple.exceptions.ExceptionVO;
+import com.exemple.message.Message;
+import com.exemple.message.RegisterMessages;
+import com.exemple.utils.utilsInterface.Util;
 import com.exemple.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,8 +38,10 @@ public class UtilImpl implements Util {
     public boolean validatePassword(String password) {
 
         if (password == null || password.isEmpty()) {
-            setMessage(new BusinessRules(RegisterMessages.EMPTY_MESSAGE.getMessage()).toString());
+
+            globalMessage(Message.UtilPassword.EMPTY_PASSWORD, ExceptionVO.ERROR_INFO );
             return false;
+
         }
 
         if (password.length() < 8) {
@@ -135,5 +139,9 @@ public class UtilImpl implements Util {
 
     public String getMessage() {
         return message;
+    }
+
+    public void globalMessage(final String severityMessage, String exceptionVO) {
+                globalMessage(severityMessage, exceptionVO);
     }
 }

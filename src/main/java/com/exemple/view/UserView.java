@@ -1,10 +1,9 @@
-package com.exemple.View;
+package com.exemple.view;
 
-import com.exemple.Enum.RegisterMessages;
-import com.exemple.Exceptions.BusinessRules;
+import com.exemple.exceptions.BusinessRules;
 import com.exemple.controller.ControllerInterface.UserController;
 import com.exemple.dto.UserDTO;
-import com.exemple.Entity.User;
+import com.exemple.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

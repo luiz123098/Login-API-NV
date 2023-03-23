@@ -1,4 +1,4 @@
-package com.exemple.Exceptions;
+package com.exemple.exceptions;
 
 public class ExceptionVO {
 
