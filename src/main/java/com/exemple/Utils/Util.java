@@ -141,17 +141,5 @@ public class Util {
         public String getMessage() {
             return message;
         }
-        public String globalMessage (final String severityMessage, String exceptionVO){
-            return severityMessage + exceptionVO;
-        }
-        public void loginException(String mensagem){
-            this.message = message;
-            final ExceptionVO exceptionVO = new ExceptionVO(globalMessage(Message.UtilLogin.USER_ALREADY_REGISTER,ExceptionVO.ERROR_INFO));
-        }
-        public void passwordException(String message){
-            this.message = message;
-            final ExceptionVO exceptionVO = new ExceptionVO(message);
-
-        }
 
 }
