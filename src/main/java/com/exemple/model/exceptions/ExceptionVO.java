@@ -1,4 +1,4 @@
-package com.exemple.exceptions;
+package com.exemple.model.exceptions;
 
 public class ExceptionVO {
     private String message;

@@ -1,9 +1,8 @@
-package com.exemple.utils;
+package com.exemple.model.utils;
 
-import com.exemple.exceptions.BusinessRules;
-import com.exemple.exceptions.ExceptionVO;
-import com.exemple.message.Message;
-import com.exemple.model.UserModel;
+import com.exemple.model.exceptions.BusinessRules;
+import com.exemple.model.message.Message;
+import com.exemple.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,7 @@ import java.util.regex.Pattern;
 @Component
 public class Util {
     @Autowired
-    public UserModel userModel;
+    public UserRepository userRepository;
     public String message;
 
     public boolean validateLogin(String login) {
@@ -22,60 +21,76 @@ public class Util {
         Matcher matcher = pattern.matcher(login);
         // Compilar o regex e aplicá-lo à String do email
         try {
-            userModel.existsByLogin(login);
-            return matcher.matches();
+            if (userRepository.existsByLogin(login)){
+                return matcher.matches();
+            }else {
+                setMessage(Message.UtilRegister.FAIL_REGISTER);
+                return false;
+            }
+
             // Retornar se o email corresponde ao regex
         } catch (Exception e) {
             setMessage(Message.UtilLogin.USER_ALREADY_REGISTER);
-            throw new BusinessRules(getMessage());
+            e.getMessage();
+            return false;
         }
     }
     public boolean validatePassword(String password) {
+        Boolean returns = Boolean.TRUE;
     try{
         if (password == null || password.isEmpty()) {
 
             setMessage(Message.UtilPassword.EMPTY_PASSWORD);
-            return false;
+            returns = false;
+            throw new BusinessRules(getMessage());
 
         }
 
         if (password.length() < 8) {
             setMessage(Message.UtilPassword.TOO_SHORT);
-            return false;
+            returns = false;
+            throw new BusinessRules(getMessage());
         }
 
         if (!password.matches(".*\\d.*")) {
             setMessage(Message.UtilPassword.MISSING_DIGIT);
-            return false;
+            returns = false;
+            throw new BusinessRules(getMessage());
         }
 
         if (!password.matches(".*[A-Z].*")) {
             setMessage(Message.UtilPassword.MISSING_UPPERCASE);
-            return false;
+            returns = false;
+            throw new BusinessRules(getMessage());
         }
 
         if (!password.matches(".*[a-z].*")) {
             setMessage(Message.UtilPassword.MISSING_LOWERCASE);
-            return false;
+            returns = false;
+            throw new BusinessRules(getMessage());
         }
 
         if (!password.matches(".*[@#$%^&+=!].*")) {
             setMessage(Message.UtilPassword.MISSING_SPECIAL);
-            return false;
+            returns = false;
+            throw new BusinessRules(getMessage());
         }
-        return true;
+        return returns;
     }catch (Exception e){
-        throw new BusinessRules(getMessage());
+        e.getMessage();
+        return false;
     }
         }
 
         public boolean validateCpf(String cpf){
             //Metodo criado por ChatGpt, coloquei as anotações
             try {
+                boolean returns = Boolean.TRUE;
                 //Verifica se a senha não é nula
                 if (cpf == null || cpf.trim().isEmpty()) {
                     setMessage(Message.UtilCPF.EMPTY_CPF);
-                    return false;
+                    returns = false;
+                    throw new BusinessRules(getMessage());
                 }
 
                 // Remove pontos e traços do CPF
@@ -84,7 +99,8 @@ public class Util {
                 // Verifica se o CPF tem 11 dígitos
                 if (cpf.length() != 11) {
                     setMessage(Message.UtilCPF.DIGITS_COUNT);
-                    return false;
+                    returns = false;
+                    throw new BusinessRules(getMessage());
                 }
 
                 // Verifica se todos os dígitos do CPF são iguais
@@ -92,12 +108,12 @@ public class Util {
                 for (int i = 1; i < cpf.length(); i++) {
                     if (cpf.charAt(i) != cpf.charAt(0)) {
                         allDigitsEqual = false;
-                        break;
                     }
                 }
                 if (allDigitsEqual) {
                     setMessage(Message.UtilCPF.EQUALS_DIGITS);
-                    return false;
+                    returns = false;
+                    throw new BusinessRules(getMessage());
                 }
 
                 // Calcula os dígitos verificadores do CPF
@@ -125,10 +141,11 @@ public class Util {
                 for (int i = 0; i < 11; i++) {
                     if (digits[i] != Character.getNumericValue(cpf.charAt(i))) {
                         setMessage(Message.UtilCPF.INVALID_CPF);
-                        return false;
+                        returns = false;
+                        throw new BusinessRules(getMessage());
                     }
                 }
-                return true;
+                return returns;
             } catch (Exception e) {
                 throw new BusinessRules(getMessage());
             }

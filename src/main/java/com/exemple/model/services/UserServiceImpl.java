@@ -1,11 +1,11 @@
-package com.exemple.controller;
+package com.exemple.model.services;
 
-import com.exemple.utils.Util;
-import com.exemple.model.UserModel;
-import com.exemple.controller.controllerInterface.UserController;
-import com.exemple.dto.UserDTO;
-import com.exemple.entity.User;
-import com.exemple.exceptions.BusinessRules;
+import com.exemple.model.utils.Util;
+import com.exemple.model.UserRepository;
+import com.exemple.model.services.ServicesInterface.UserService;
+import com.exemple.model.dto.UserDTO;
+import com.exemple.model.entity.User;
+import com.exemple.model.exceptions.BusinessRules;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserControllerImpl implements UserController {
+public class UserServiceImpl implements UserService {
     @Autowired
     private Util util;
     private PasswordEncoder encoder;
     @Autowired
-    private UserModel userModel;
+    private UserRepository userRepository;
 
-    public UserControllerImpl(PasswordEncoder encoder) {
+    public UserServiceImpl(PasswordEncoder encoder) {
         this.encoder = encoder;
     }
 
@@ -33,7 +33,7 @@ public class UserControllerImpl implements UserController {
             util.validateCpf(user.getCpf());
             //faz a cryptografia da senha antes de salvar no banco
             user.setPassword(encoder.encode(user.getPassword()));
-            return userModel.save(user);
+            return userRepository.save(user);
 
         } catch (Exception e) {
             throw new BusinessRules(util.getMessage());
@@ -47,7 +47,7 @@ public class UserControllerImpl implements UserController {
                 throw new BusinessRules("ID inválido: " + id);
             }
 
-            Optional<User> optionalUser = userModel.findById(id);
+            Optional<User> optionalUser = userRepository.findById(id);
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 UserDTO userDTO = new UserDTO();

@@ -1,9 +1,9 @@
-package com.exemple.view;
+package com.exemple.controller;
 
-import com.exemple.exceptions.BusinessRules;
-import com.exemple.controller.controllerInterface.UserController;
-import com.exemple.dto.UserDTO;
-import com.exemple.entity.User;
+import com.exemple.model.services.ServicesInterface.UserService;
+import com.exemple.model.exceptions.BusinessRules;
+import com.exemple.model.dto.UserDTO;
+import com.exemple.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-public class UserView {
+public class UserController {
     @Autowired
-    private UserController userController;
+    private UserService userService;
 
-    public UserView(UserController userController) {
-        this.userController = userController;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping(path = "/register")
@@ -28,7 +28,7 @@ public class UserView {
             user.setName(userDTO.getName());
             user.setCpf(userDTO.getCpf());
 
-            User userSave = userController.save(user);
+            User userSave = userService.save(user);
             return new ResponseEntity(userSave, HttpStatus.CREATED);
         } catch (BusinessRules e) {
             return new ResponseEntity(new BusinessRules("Erro ao realizar o cadastro"), HttpStatus.BAD_REQUEST);
@@ -37,7 +37,7 @@ public class UserView {
 
     @GetMapping(path = "/consult/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
-        User user = userController.findUserById(id);
+        User user = userService.findUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
         } else {

@@ -1,4 +1,4 @@
-package com.exemple.message;
+package com.exemple.model.message;
 
 public interface Message {
 
