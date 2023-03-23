@@ -1,7 +1,7 @@
 package com.exemple.view;
 
 import com.exemple.exceptions.BusinessRules;
-import com.exemple.controller.ControllerInterface.UserController;
+import com.exemple.controller.controllerInterface.UserController;
 import com.exemple.dto.UserDTO;
 import com.exemple.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

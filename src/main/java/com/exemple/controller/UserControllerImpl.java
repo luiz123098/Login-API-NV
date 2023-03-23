@@ -1,10 +1,8 @@
 package com.exemple.controller;
 
-import com.exemple.exceptions.ExceptionVO;
-import com.exemple.message.Message;
 import com.exemple.utils.Util;
 import com.exemple.model.UserModel;
-import com.exemple.controller.ControllerInterface.UserController;
+import com.exemple.controller.controllerInterface.UserController;
 import com.exemple.dto.UserDTO;
 import com.exemple.entity.User;
 import com.exemple.exceptions.BusinessRules;

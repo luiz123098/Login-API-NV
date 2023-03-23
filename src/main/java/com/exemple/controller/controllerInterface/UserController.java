@@ -1,4 +1,4 @@
-package com.exemple.controller.ControllerInterface;
+package com.exemple.controller.controllerInterface;
 
 import com.exemple.entity.User;
 
