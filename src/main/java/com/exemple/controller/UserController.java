@@ -34,7 +34,7 @@ public class UserController {
             User userSave = userService.save(user);
             return new ResponseEntity(userSave, HttpStatus.CREATED);
         } catch (BusinessRules e) {
-            return new ResponseEntity(new BusinessRules("Erro ao realizar o cadastro"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new BusinessRules(util.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 
