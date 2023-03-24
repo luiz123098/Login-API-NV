@@ -24,7 +24,7 @@ public class Util {
             if (!userRepository.existsByLogin(login)){
                 return matcher.matches();
             }else {
-                setMessage(Message.UtilRegister.FAIL_REGISTER);
+                setMessage(Message.UtilLogin.USER_ALREADY_REGISTER);
                 return false;
             }
 

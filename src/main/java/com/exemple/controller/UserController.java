@@ -42,7 +42,7 @@ public class UserController {
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
         User user = userService.findUserById(id);
         if (user != null) {
-            return ResponseEntity.ok(user);
+            return new ResponseEntity(user, HttpStatus.ACCEPTED);
         } else {
             return ResponseEntity.notFound().build();
         }

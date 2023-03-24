@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 UserDTO userDTO = new UserDTO();
-                BeanUtils.copyProperties(userDTO, user);
+                BeanUtils.copyProperties(user, userDTO);
                 return user;
             } else {
                 return null;
