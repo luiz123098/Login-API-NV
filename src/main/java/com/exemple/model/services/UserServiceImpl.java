@@ -47,6 +47,7 @@ public class UserServiceImpl  {
             user.setPassword(encoder.encode(userDTO.getPassword()));
             if(userRepository.existsByLogin(user.getLogin())) {
                 Optional<User> optionalUser = userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
+                return user;
             }
              return new User();
 
