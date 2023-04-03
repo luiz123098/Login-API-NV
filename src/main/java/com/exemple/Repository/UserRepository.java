@@ -11,6 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public boolean existsByLogin(String login);
 
-    @Override
-    Optional<User> findById(Long id);
+    Optional<User> findByLoginAndPassword(String login, String password);
+
 }
