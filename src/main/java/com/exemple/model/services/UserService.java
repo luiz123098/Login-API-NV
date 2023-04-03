@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl  {
+public class UserService {
     @Autowired
     private Util util;
     private PasswordEncoder encoder;
     @Autowired
     private UserRepository userRepository;
 
-    public UserServiceImpl(PasswordEncoder encoder) {
+    public UserService(PasswordEncoder encoder) {
         this.encoder = encoder;
     }
 

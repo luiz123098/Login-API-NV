@@ -3,7 +3,7 @@ package com.exemple.controller;
 import com.exemple.model.dto.UserDTO;
 import com.exemple.model.entity.User;
 import com.exemple.model.exceptions.BusinessRules;
-import com.exemple.model.services.UserServiceImpl;
+import com.exemple.model.services.UserService;
 import com.exemple.model.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserService userService;
     @Autowired
     private Util util;
 
@@ -31,7 +31,7 @@ public class UserController {
             user.setName(userDTO.getName());
             user.setCpf(userDTO.getCpf());
 
-            User userSave = userServiceImpl.save(user);
+            User userSave = userService.save(user);
             return new ResponseEntity(userSave, HttpStatus.CREATED);
         } catch (BusinessRules e) {
             return new ResponseEntity(new BusinessRules(util.getMessage()), HttpStatus.BAD_REQUEST);
@@ -40,7 +40,7 @@ public class UserController {
 
     @GetMapping(path = "/login")
     public ResponseEntity<Object> findUserByLoginAndPassword(@Valid @PathVariable UserDTO userDTO) throws Exception {
-        User user = userServiceImpl.findUserByLoginAndPassword(userDTO);
+        User user = userService.findUserByLoginAndPassword(userDTO);
         if (user != null) {
             return new ResponseEntity(user, HttpStatus.ACCEPTED);
         } else {
