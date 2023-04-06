@@ -25,9 +25,9 @@ public class UserService {
 
     public User save(User user) {
         try {
-            if(util.validateLogin(user.getLogin())) {
-                util.validatePassword(user.getPassword());
-                util.validateCpf(user.getCpf());
+            if(util.validateLogin(user.getLogin()) ||
+               util.validatePassword(user.getPassword()) ||
+               util.validateCpf(user.getCpf())){
                 //faz a cryptografia da senha antes de salvar no banco
                 user.setPassword(encoder.encode(user.getPassword()));
                 return userRepository.save(user);
