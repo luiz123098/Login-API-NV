@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/login")
-    public ResponseEntity<Object> findUserByLoginAndPassword(@Valid @RequestParam String login, String password) throws Exception {
+    public ResponseEntity<Object> findUserByLoginAndPassword(@Valid @RequestBody String login, String password) throws Exception {
         UserDTO userDTO = new UserDTO();
         userDTO.setLogin(login);
         userDTO.setPassword(password);
