@@ -25,13 +25,16 @@ public class UserService {
 
     public User save(User user) {
         try {
-            util.validateLogin(user.getLogin());
-            util.validatePassword(user.getPassword());
-            util.validateCpf(user.getCpf());
-            //faz a cryptografia da senha antes de salvar no banco
-            user.setPassword(encoder.encode(user.getPassword()));
-            return userRepository.save(user);
-
+            if(util.validateLogin(user.getLogin())) {
+                util.validatePassword(user.getPassword());
+                util.validateCpf(user.getCpf());
+                //faz a cryptografia da senha antes de salvar no banco
+                user.setPassword(encoder.encode(user.getPassword()));
+                return userRepository.save(user);
+            }
+            else {
+                throw new BusinessRules(util.getMessage());
+            }
         } catch (Exception e) {
             throw new BusinessRules(util.getMessage());
         }
@@ -39,18 +42,21 @@ public class UserService {
 
 
         public User findUserByLoginAndPassword (UserDTO userDTO) throws Exception {
-            if (userDTO.getLogin() == null || userDTO.getPassword() == null || userDTO.getLogin().isEmpty() || userDTO.getPassword().isEmpty()) {
-                throw new Exception("O campo Email ou senha deve ser preenchido inválido");
-            }
-            User user = new User();
-            user.setLogin(userDTO.getLogin());
-            user.setPassword(encoder.encode(userDTO.getPassword()));
-            if(userRepository.existsByLogin(user.getLogin())) {
-                Optional<User> optionalUser = userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
-                return user;
-            }
-             return new User();
-
+            try {
+                if (userDTO.getLogin() == null || userDTO.getPassword() == null || userDTO.getLogin().isEmpty() || userDTO.getPassword().isEmpty()) {
+                    throw new Exception("O campo Email ou senha deve ser preenchido inválido");
+                }
+                User user = new User();
+                user.setLogin(userDTO.getLogin());
+                user.setPassword(encoder.encode(userDTO.getPassword()));
+                if (userRepository.existsByLogin(user.getLogin())) {
+                    Optional<User> optionalUser = userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
+                    return user;
+                }
+                return new User();
+            } catch (Exception e) {
+                throw new BusinessRules(util.getMessage());
             }
         }
+}
 
