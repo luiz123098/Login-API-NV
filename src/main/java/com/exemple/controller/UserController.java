@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/login")
-    public ResponseEntity<Object> findUserByLoginAndPassword(@Valid @PathVariable UserDTO userDTO) throws Exception {
+    public ResponseEntity<Object> findUserByLoginAndPassword(@Valid @RequestParam UserDTO userDTO) throws Exception {
         User user = userService.findUserByLoginAndPassword(userDTO);
         if (user != null) {
             return new ResponseEntity(user, HttpStatus.ACCEPTED);
