@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -51,4 +53,31 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping(path = "/delete-user")
+    public ResponseEntity deleteUserByCpf(@RequestBody UserDTO userDTO) {
+        User user = new User();
+        User userClone = userService.findByCPF(userDTO);
+        user.setPassword(userClone.getPassword());
+        user.setCpf(userClone.getCpf());
+        user.setName(userClone.getName());
+
+        userService.deleteById(user);
+
+        return new ResponseEntity(new BusinessRules(util.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(path = "/findUser")
+    public ResponseEntity searchUser(@RequestBody String user) {
+        UserDTO userResponse = new UserDTO();
+        try {
+            userResponse.setUser(user);
+            userService.findByUser(userResponse);
+            return new ResponseEntity(userResponse, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            throw new BusinessRules(util.getMessage());
+        }
+    }
 }
+
+

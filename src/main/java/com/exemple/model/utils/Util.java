@@ -152,6 +152,18 @@ public class Util {
             }
         }
 
+        public boolean validateUser(String user){
+            try {
+                if(userRepository.existsByUser(user)){
+                    return true;
+                }else
+                    setMessage(Message.UtilUser.NOT_USER_FOUND);
+                    return false;
+            }catch (Exception e){
+                throw new BusinessRules(getMessage());
+            }
+        }
+
         public void setMessage (String message){
             this.message = message;
         }

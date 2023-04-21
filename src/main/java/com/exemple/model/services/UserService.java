@@ -6,6 +6,7 @@ import com.exemple.model.dto.UserDTO;
 import com.exemple.model.entity.User;
 import com.exemple.model.exceptions.BusinessRules;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ public class UserService {
                 user.setLogin(userDTO.getLogin());
                 user.setPassword(encoder.encode(userDTO.getPassword()));
                 if (userRepository.existsByLogin(user.getLogin())) {
-                    Optional<User> optionalUser = userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
+                    Optional<UserDTO> optionalUser = userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
                     return user;
                 }
                 return new User();
@@ -58,5 +59,38 @@ public class UserService {
                 throw new BusinessRules(util.getMessage());
             }
         }
-}
 
+        public User findByCPF(UserDTO userDTO){
+        User userReturn = new User();
+        if(userRepository.findByCpf(userDTO.getCpf())){
+            userReturn.setId(userDTO.getId());
+            userReturn.setName(userDTO.getName());
+            userReturn.setPassword(userDTO.getPassword());
+            userReturn.setLogin(userDTO.getLogin());
+            return userReturn;
+        }else{
+            throw new BusinessRules(util.getMessage());}
+        }
+        public void deleteById(User user){
+        userRepository.deleteById(user.getId());
+        }
+
+        public UserDTO findByUser(UserDTO userDTO){
+
+            userDTO.getUser();
+            try {
+                if(userRepository.existsByUser(userDTO.getUser())
+                    && util.validateUser(userDTO.getUser())){
+                    Optional<UserDTO> userDTOReturn = userRepository.findByUser(userDTO.getUser());
+                    UserDTO userResponse = userDTOReturn.get();
+                    return userResponse;
+                }else return new UserDTO();
+            }catch (Exception e) {
+                throw new BusinessRules(util.getMessage());
+            }
+        }
+
+
+
+
+}

@@ -1,6 +1,9 @@
 package com.exemple.model.message;
 
 public interface Message {
+    interface UtilUser{
+        String NOT_USER_FOUND = "Não encontramos nenhum usuario";
+    }
 
     interface UtilRegister{
         String FAIL_REGISTER = "Falha ao cadastrar o usuario";
