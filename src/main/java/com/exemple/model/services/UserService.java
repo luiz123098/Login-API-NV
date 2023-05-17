@@ -84,7 +84,9 @@ public class UserService {
                     Optional<UserDTO> userDTOReturn = userRepository.findByUser(userDTO.getUser());
                     UserDTO userResponse = userDTOReturn.get();
                     return userResponse;
-                }else return new UserDTO();
+                } else {
+                    throw new BusinessRules(util.getMessage());
+                }
             }catch (Exception e) {
                 throw new BusinessRules(util.getMessage());
             }
