@@ -37,50 +37,50 @@ public class Util {
     }
     public boolean validatePassword(String password) {
         Boolean returns = Boolean.TRUE;
-    try{
-        if (password == null || password.isEmpty()) {
+        try{
+            if (password == null || password.isEmpty()) {
 
-            setMessage(Message.UtilPassword.EMPTY_PASSWORD);
-            returns = false;
-            throw new BusinessRules(getMessage());
+                setMessage(Message.UtilPassword.EMPTY_PASSWORD);
+                returns = false;
+                throw new BusinessRules(getMessage());
 
+            }
+
+            if (password.length() < 8) {
+                setMessage(Message.UtilPassword.TOO_SHORT);
+                returns = false;
+                throw new BusinessRules(getMessage());
+            }
+
+            if (!password.matches(".*\\d.*")) {
+                setMessage(Message.UtilPassword.MISSING_DIGIT);
+                returns = false;
+                throw new BusinessRules(getMessage());
+            }
+
+            if (!password.matches(".*[A-Z].*")) {
+                setMessage(Message.UtilPassword.MISSING_UPPERCASE);
+                returns = false;
+                throw new BusinessRules(getMessage());
+            }
+
+            if (!password.matches(".*[a-z].*")) {
+                setMessage(Message.UtilPassword.MISSING_LOWERCASE);
+                returns = false;
+                throw new BusinessRules(getMessage());
+            }
+
+            if (!password.matches(".*[@#$%^&+=!].*")) {
+                setMessage(Message.UtilPassword.MISSING_SPECIAL);
+                returns = false;
+                throw new BusinessRules(getMessage());
+            }
+            return returns;
+        }catch (Exception e){
+            e.getMessage();
+            return false;
         }
-
-        if (password.length() < 8) {
-            setMessage(Message.UtilPassword.TOO_SHORT);
-            returns = false;
-            throw new BusinessRules(getMessage());
-        }
-
-        if (!password.matches(".*\\d.*")) {
-            setMessage(Message.UtilPassword.MISSING_DIGIT);
-            returns = false;
-            throw new BusinessRules(getMessage());
-        }
-
-        if (!password.matches(".*[A-Z].*")) {
-            setMessage(Message.UtilPassword.MISSING_UPPERCASE);
-            returns = false;
-            throw new BusinessRules(getMessage());
-        }
-
-        if (!password.matches(".*[a-z].*")) {
-            setMessage(Message.UtilPassword.MISSING_LOWERCASE);
-            returns = false;
-            throw new BusinessRules(getMessage());
-        }
-
-        if (!password.matches(".*[@#$%^&+=!].*")) {
-            setMessage(Message.UtilPassword.MISSING_SPECIAL);
-            returns = false;
-            throw new BusinessRules(getMessage());
-        }
-        return returns;
-    }catch (Exception e){
-        e.getMessage();
-        return false;
     }
-        }
 
         public boolean validateCpf(String cpf){
             //Metodo criado por ChatGpt, coloquei as anotações
@@ -126,7 +126,7 @@ public class Util {
                 for (int i = 0; i < 9; i++) {
                     sum += digits[i] * factors[i];
                 }
-                //ESTAVA DANDO ERRO ENTÃO COMMITEI PARA RESOLVER DEPOIS ESSA QUESTÃO
+                //Enquanto estamos testando a API não tem a necessidade de verificar a veracidade do cpf
                 //int remainder = sum % 11;
                 //int firstVerifier = (remainder < 2) ? 0 : (11 - remainder);
                 //digits[9] = firstVerifier;
@@ -137,7 +137,7 @@ public class Util {
                 //remainder = sum % 11;
                 //int secondVerifier = (remainder < 2) ? 0 : (11 - remainder);
                 //digits[10] = secondVerifier;
-//
+
                 //// Verifica se os dígitos verificadores calculados são iguais aos dígitos informados no CPF
                 //for (int i = 0; i < 11; i++) {
                 //    if (digits[i] != Character.getNumericValue(cpf.charAt(i))) {
