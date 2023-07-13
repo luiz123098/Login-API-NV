@@ -41,26 +41,26 @@ public class UserService {
         }
     }
 
-
-        public User findUserByLoginAndPassword (UserDTO userDTO) throws Exception {
-            try {
-                if (userDTO.getLogin() == null || userDTO.getPassword() == null || userDTO.getLogin().isEmpty() || userDTO.getPassword().isEmpty()) {
-                    throw new Exception("O campo Email ou senha deve ser preenchido inválido");
-                }
-                User user = new User();
-                user.setLogin(userDTO.getLogin());
-                user.setPassword(encoder.encode(userDTO.getPassword()));
-                if (userRepository.existsByLogin(user.getLogin())) {
-                    Optional<UserDTO> optionalUser = userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
-                    return user;
-                }
-                return new User();
-            } catch (Exception e) {
-                throw new BusinessRules(util.getMessage());
+    public User findUserByLoginAndPassword(UserDTO userDTO) throws Exception {
+        try {
+            if (userDTO.getLogin() == null || userDTO.getPassword() == null || userDTO.getLogin().isEmpty() || userDTO.getPassword().isEmpty()) {
+                throw new Exception("O campo Email ou senha deve ser preenchido inválido");
             }
-        }
 
-        public User findByCPF(UserDTO userDTO){
+            User userLogin = userRepository.findByLogin(userDTO.getLogin());
+
+            if (userLogin != null && encoder.matches(userDTO.getPassword(), userLogin.getPassword())) {
+                // Login e senha correspondem
+                return userLogin;
+            }
+
+            return null;
+        } catch (Exception e) {
+            throw new BusinessRules(util.getMessage());
+        }
+    }
+
+    public User findByCPF(UserDTO userDTO){
         User userReturn = new User();
         if(userRepository.findByCpf(userDTO.getCpf())){
             userReturn.setId(userDTO.getId());
@@ -79,8 +79,10 @@ public class UserService {
 
             userDTO.getUser();
             try {
-                if(userRepository.existsByUser(userDTO.getUser())
-                    && util.validateUser(userDTO.getUser())){
+                User user = new User();
+                user.setLogin(userDTO.getLogin());
+                user.setPassword(userDTO.getPassword());
+                if(util.validateUser(user)){
                     Optional<UserDTO> userDTOReturn = userRepository.findByUser(userDTO.getUser());
                     UserDTO userResponse = userDTOReturn.get();
                     return userResponse;

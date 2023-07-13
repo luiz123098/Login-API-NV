@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import javax.xml.ws.Response;
 import java.util.Optional;
@@ -31,6 +30,7 @@ public class UserController {
             user.setLogin(userDTO.getLogin());
             user.setPassword(userDTO.getPassword());
             user.setName(userDTO.getName());
+            user.setUser(userDTO.getUser());
             user.setCpf(userDTO.getCpf());
 
             User userSave = userService.save(user);
@@ -41,16 +41,16 @@ public class UserController {
     }
 
     @GetMapping(path = "/login")
-    public ResponseEntity<String> findUserByLoginAndPassword(@Valid String login, String password) throws Exception {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setLogin(login);
-        userDTO.setPassword(password);
-
-        User user = userService.findUserByLoginAndPassword(userDTO);
-        if (user != null) {
-            return new ResponseEntity(user, HttpStatus.ACCEPTED);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<String> findUserByLoginAndPassword(@RequestBody UserDTO userDTO) {
+        try{
+            User user = userService.findUserByLoginAndPassword(userDTO);
+            if (user != null) {
+                return new ResponseEntity(user, HttpStatus.ACCEPTED);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            throw new BusinessRules(util.getMessage());
         }
     }
 

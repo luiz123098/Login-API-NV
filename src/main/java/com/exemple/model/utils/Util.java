@@ -1,5 +1,6 @@
 package com.exemple.model.utils;
 
+import com.exemple.model.entity.User;
 import com.exemple.model.exceptions.BusinessRules;
 import com.exemple.model.message.Message;
 import com.exemple.Repository.UserRepository;
@@ -14,6 +15,16 @@ public class Util {
     public UserRepository userRepository;
     public String message;
 
+    public static boolean validateEmptyString(final String string) {
+        if (string == null) {
+            return false;
+        }
+        if (string.trim().length() == 0) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean validateLogin(String login) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
 
@@ -21,7 +32,10 @@ public class Util {
         Matcher matcher = pattern.matcher(login);
         // Compilar o regex e aplicá-lo à String do email
         try {
-            if (!userRepository.existsByLogin(login)){
+            User loginUser = userRepository.findByLogin(login);
+            if (validateEmptyString(loginUser.getLogin()) &&
+            validateEmptyString(loginUser.getPassword())){
+
                 return matcher.matches();
             }else {
                 setMessage(Message.UtilLogin.USER_ALREADY_REGISTER);
@@ -152,7 +166,7 @@ public class Util {
             }
         }
 
-        public boolean validateUser(String user){
+        public boolean validateUser(User user){
             try {
                 if(userRepository.existsByUser(user)){
                     return true;

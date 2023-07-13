@@ -27,6 +27,14 @@ public class User {
     @Column(name = "cpf",nullable = false)
     private String cpf;
 
+    public User(){}
+    public User(Long id) {this.id = id;}
+    public User(String login, String password){this.login = login; this.password = password;}
+    public User(String login, String password, String name){this.login = login; this.password = password; this.name = name;}
+    public User(String login, String password, String name, String cpf){this.login = login; this.password = password; this.name = name; this.cpf = cpf;}
+    public User(String login, String password, String name, String cpf, String user){this.login = login; this.password = password; this.name = name; this.cpf = cpf; this.user = user;}
+    public User(Long id,String login, String password, String name, String cpf, String user){this.login = login; this.password = password; this.name = name; this.cpf = cpf; this.user = user; this.id = id;}
+
     public Long getId() {
         return id;
     }
