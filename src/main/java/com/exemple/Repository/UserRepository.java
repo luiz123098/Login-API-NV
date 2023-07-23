@@ -3,6 +3,7 @@ package com.exemple.Repository;
 import com.exemple.model.dto.UserDTO;
 import com.exemple.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
