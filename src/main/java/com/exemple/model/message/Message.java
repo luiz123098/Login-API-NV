@@ -30,5 +30,8 @@ public interface Message {
         String INVALID_CPF = "CPF invalido!";
     }
 
-
+    interface UtilDelete{
+        String DELETE_COMPLETE = "Usuario deletado com sucesso!";
+        String DELETE_FAIL = "Ocorreu um erro ao deletar o usuario!";
+    }
 }

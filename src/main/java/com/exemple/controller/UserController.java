@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
-import javax.xml.ws.Response;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -56,15 +53,22 @@ public class UserController {
 
     @DeleteMapping(path = "/delete-user")
     public ResponseEntity deleteUserByCpf(@RequestBody UserDTO userDTO) {
-        User user = new User();
-        User userClone = userService.findByCPF(userDTO);
-        user.setPassword(userClone.getPassword());
-        user.setCpf(userClone.getCpf());
-        user.setName(userClone.getName());
+        try {
+            User user = new User();
+            User userClone = userService.findUserByLoginAndPassword(userDTO);
+            user.setPassword(userClone.getPassword());
+            user.setId(userClone.getId());
+            user.setCpf(userClone.getCpf());
+            user.setName(userClone.getName());
 
-        userService.deleteById(user);
+            if (userService.deleteById(user) == true){
+                return new ResponseEntity(new BusinessRules(util.getMessage()), HttpStatus.ACCEPTED);
+            }else
+                return new ResponseEntity(new BusinessRules(util.getMessage()), HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity(new BusinessRules(util.getMessage()), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            throw new BusinessRules(util.getMessage());
+        }
     }
 
     @GetMapping(path = "/findUser")
@@ -79,5 +83,3 @@ public class UserController {
         }
     }
 }
-
-

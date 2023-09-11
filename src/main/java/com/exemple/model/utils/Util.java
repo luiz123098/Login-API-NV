@@ -33,9 +33,7 @@ public class Util {
         // Compilar o regex e aplicá-lo à String do email
         try {
             User loginUser = userRepository.findByLogin(login);
-            if (validateEmptyString(loginUser.getLogin()) &&
-            validateEmptyString(loginUser.getPassword())){
-
+            if (userRepository.existsByLogin(login)){
                 return matcher.matches();
             }else {
                 setMessage(Message.UtilLogin.USER_ALREADY_REGISTER);
@@ -178,6 +176,21 @@ public class Util {
             }
         }
 
+        public boolean validateDelete(User user){
+        try{
+            if(user != null){
+                setMessage(Message.UtilDelete.DELETE_COMPLETE);
+                return true;
+            }
+            else {
+                setMessage(Message.UtilDelete.DELETE_FAIL);
+                return false;
+            }
+        }catch (Exception e){
+            throw new BusinessRules(getMessage());
+        }
+        }
+
         public void setMessage (String message){
             this.message = message;
         }
@@ -185,5 +198,4 @@ public class Util {
         public String getMessage() {
             return message;
         }
-
 }

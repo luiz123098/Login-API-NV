@@ -12,8 +12,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findByLogin(String login);
-    public User findByPassword(String password);
-
+    public Boolean existsByLogin(String login);
     public boolean existsByUser(User user);
     public boolean findByCpf(String cpf);
     public void deleteById(Long id);

@@ -6,7 +6,6 @@ import com.exemple.model.dto.UserDTO;
 import com.exemple.model.entity.User;
 import com.exemple.model.exceptions.BusinessRules;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,13 +42,23 @@ public class UserService {
 
     public User findUserByLoginAndPassword(UserDTO userDTO) throws Exception {
         try {
-            if (userDTO.getLogin() == null || userDTO.getPassword() == null || userDTO.getLogin().isEmpty() || userDTO.getPassword().isEmpty()) {
-                throw new Exception("O campo Email ou senha deve ser preenchido inválido");
+            if (userDTO.getLogin() == null ||
+                userDTO.getPassword() == null ||
+                userDTO.getLogin().isEmpty() ||
+                userDTO.getPassword().isEmpty()) {
+                throw new Exception("O campo Email ou senha deve ser preenchido!");
             }
+            //userDTO.setPassword(encoder.encode(userDTO.getPassword()));
 
             User userLogin = userRepository.findByLogin(userDTO.getLogin());
+            //User userPassword = userRepository.findByPassword(userDTO.getPassword());
 
-            if (userLogin != null && encoder.matches(userDTO.getPassword(), userLogin.getPassword())) {
+
+
+            String passwordCrypt = userDTO.getPassword();
+
+            if (encoder.matches(passwordCrypt,userLogin.getPassword()) &&
+                userLogin.getLogin().equals(userDTO.getLogin())) {
                 // Login e senha correspondem
                 return userLogin;
             }
@@ -69,10 +78,15 @@ public class UserService {
             userReturn.setLogin(userDTO.getLogin());
             return userReturn;
         }else{
-            throw new BusinessRules(util.getMessage());}
+            throw new BusinessRules(util.getMessage());
         }
-        public void deleteById(User user){
-        userRepository.deleteById(user.getId());
+    }
+        public boolean deleteById(User user){
+            if (util.validateDelete(user)){
+                userRepository.deleteById(user.getId());
+                return true;
+            }else
+                throw new BusinessRules(util.getMessage());
         }
 
         public UserDTO findByUser(UserDTO userDTO){
