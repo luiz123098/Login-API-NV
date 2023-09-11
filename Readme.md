@@ -1,5 +1,5 @@
-## Seja bem vindo ao projeto de Api-Login
-> Conectando no banco
-- para conectar no banco de dados, é necessário o ip da máquina onde está o banco,
-    também necessária a permissão do criador do banco no arquivo hb_conf
-- esta API tem todas as funcionalidades que uma API de cadastro de dados de usuarios
+## Welcome to the Api-Login Project
+- This API contains all the functionalities required for user data registration.
+
+>Connecting to the Database
+- To connect to the database, you will need the IP address of the machine where the database is located, as well as permission from the database creator in the "hb_conf" file.
